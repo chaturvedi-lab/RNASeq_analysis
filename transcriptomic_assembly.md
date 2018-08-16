@@ -10,8 +10,13 @@
 Programs for post-processing of Trinity output files
 1. [SWISSPROT](https://www.uniprot.org/) to run blastx on the trinity output files.
 
-/uufs/chpc.utah.edu/sys/installdir/trinity/2.6.6/util/TrinityStats.pl Trinity.fasta
+I then ran some intial stats assessment for the assembly using the `TrinityStats.pl` script.
 
+Usage:
+```bash
+TrinityStats.pl Trinity.fasta
+```
+Here are the summaries generated using this script:
 
 *Counts of transcripts, etc.*
 
