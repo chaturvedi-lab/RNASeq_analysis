@@ -131,3 +131,15 @@ Aligned pairs: 244327894
                   965147 ( 0.4%) are discordant alignments
 47.3% concordant pair alignment rate.
 ~~~
+
+# Reference based transcriptomic assembly using TopHat and Trinity denovo alignment
+This is to check the quality and statistics of alignments to the de novo assembly. 
+
+For this I first built the bowtie2 index for the trinity de novo assembly.
+
+```bash
+bowtie2 Trinity.fasta Trinity.fasta
+```
+I then used TopHat (similar to the command above) to redo alignments to this denovo assembly.
+
+
