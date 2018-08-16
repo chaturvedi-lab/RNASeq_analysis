@@ -15,13 +15,16 @@ Programs for post-processing of Trinity output files
 
 *Counts of transcripts, etc.*
 
+~~~
 Total trinity 'genes':	167323
 Total trinity transcripts:	323046
 Percent GC: 40.91
 
+~~~
 
 *Stats based on ALL transcript contigs:*
 
+~~~
 	Contig N10: 4240
 	Contig N20: 2998
 	Contig N30: 2311
@@ -32,9 +35,11 @@ Percent GC: 40.91
 	Average contig: 729.78
 	Total assembled bases: 235752177
 
+~~~
 
 *Stats based on ONLY LONGEST ISOFORM per 'GENE':*
 
+~~~
 	Contig N10: 3960
 	Contig N20: 2607
 	Contig N30: 1848
@@ -45,6 +50,7 @@ Percent GC: 40.91
 	Average contig: 517.68
 	Total assembled bases: 86619651
 
+~~~
 
 # Reference based transcriptomic assembly using TopHat and Cufflinks
 This is to assemble and identify the transcripts, and identifying the number of hits for each transcript and the genes they represent. For this, we need a reference genome. To do this, I map the reads to the reference genome using `Tophat` (http://ccb.jhu.edu/software/tophat/manual.shtml), then I assemble the overlapping and spaced mapped patterns in the BAM files, into exons and transcripts with `Cufflinks`. `Cufflinks` outputs a file to lay out the transcripts in reference to the genome. These giles can be merged into a single consolidated file and matched up with the existing genome annotation with Cuffmerge. Then, CuffDiff can be used to determine differential expression between different conditions represented by different group files. Tophat and Cufflinks do the main transcriptome assembly, but Cuffmerge contributes to the final arrangement of the output sequences.
