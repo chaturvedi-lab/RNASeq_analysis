@@ -13,16 +13,14 @@ Programs for post-processing of Trinity output files
 /uufs/chpc.utah.edu/sys/installdir/trinity/2.6.6/util/TrinityStats.pl Trinity.fasta
 
 
-################################
 *Counts of transcripts, etc.*
-################################
+
 Total trinity 'genes':	167323
 Total trinity transcripts:	323046
 Percent GC: 40.91
 
-########################################
+
 *Stats based on ALL transcript contigs:*
-########################################
 
 	Contig N10: 4240
 	Contig N20: 2998
@@ -35,9 +33,7 @@ Percent GC: 40.91
 	Total assembled bases: 235752177
 
 
-#####################################################
 *Stats based on ONLY LONGEST ISOFORM per 'GENE':*
-#####################################################
 
 	Contig N10: 3960
 	Contig N20: 2607
@@ -52,8 +48,6 @@ Percent GC: 40.91
 
 # Reference based transcriptomic assembly using TopHat and Cufflinks
 This is to assemble and identify the transcripts, and identifying the number of hits for each transcript and the genes they represent. For this, we need a reference genome. To do this, I map the reads to the reference genome using `Tophat` (http://ccb.jhu.edu/software/tophat/manual.shtml), then I assemble the overlapping and spaced mapped patterns in the BAM files, into exons and transcripts with `Cufflinks`. `Cufflinks` outputs a file to lay out the transcripts in reference to the genome. These giles can be merged into a single consolidated file and matched up with the existing genome annotation with Cuffmerge. Then, CuffDiff can be used to determine differential expression between different conditions represented by different group files. Tophat and Cufflinks do the main transcriptome assembly, but Cuffmerge contributes to the final arrangement of the output sequences.
-Here is a basic flowchart of how this process works:
-![Reference based transcriptome assembly](nprot.2012.016-F2.jpg)
 
 To build this assembly, we first need to index the genome using bowtie. 
 
@@ -86,6 +80,7 @@ This script will create output files in the out directory (outdir).
 
 These options created an assembly with the following stats found in the `align_summary.txt` created in the out directory.
 
+~~~
 Left reads:
           Input     : 514505845
            Mapped   : 249010252 (48.4% of input)
@@ -100,6 +95,7 @@ Aligned pairs: 216218873
      of these:   4518181 ( 2.1%) have multiple alignments
                   482421 ( 0.2%) are discordant alignments
 41.9% concordant pair alignment rate.
+~~~
 
 I then modified the options for tophat and reran the command as follows:
 
@@ -108,6 +104,7 @@ I then modified the options for tophat and reran the command as follows:
 ```
 These options increased the number of reads mapped as seen below:
 
+~~~
 Left reads:
           Input     : 514505845
            Mapped   : 272314312 (52.9% of input)
@@ -122,4 +119,4 @@ Aligned pairs: 244327894
      of these:  18115644 ( 7.4%) have multiple alignments
                   965147 ( 0.4%) are discordant alignments
 47.3% concordant pair alignment rate.
-
+~~~
