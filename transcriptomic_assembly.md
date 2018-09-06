@@ -140,6 +140,51 @@ For this I first built the bowtie2 index for the trinity de novo assembly.
 ```bash
 bowtie2 Trinity.fasta Trinity.fasta
 ```
-I then used TopHat (similar to the command above) to redo alignments to this denovo assembly.
+I then used TopHat (similar to the command above) to redo alignments to this denovo assembly. This was to chose the best assembly for downstream analysis. 
+
+Here is the bash script I ran (note the options):
+
+```bash
+#!/bin/bash
+#SBATCH --job-name=tophat
+#SBATCH --time=320:00:00 #walltime
+#SBATCH --nodes=1
+#SBATCH --ntasks=24
+#SBATCH --account=usubio-kp #PI account
+#SBATCH --partition=usubio-kp #specify computer cluster, other option is kinspeak
+
+module load samtools
+module load bowtie
+module load bowtie2
+module load salmon
+module load jellyfish
+
+cd /uufs/chpc.utah.edu/common/home/gompert-group1/data/lycaeides/matt_transcriptome/txome_assembly/trinity_denovo/trinity_out_dir/
+
+#build the bowtie index
+#bowtie2-build ./Trinity.fasta ./Trinity.fasta
+
+#tophat alignments
+
+/uufs/chpc.utah.edu/common/home/gompert-group1/data/lycaeides/matt_transcriptome/tophat/tophat-2.1.1.Linux_x86_64/tophat --read-edit-dist 5 --fusion-read-mismatches 3 --segment-mismatches 3 --read-mismatches 4 --read-gap-length 4 --read-realign-edit-dist 0 -p 10 -I 1000 -i 20 -o tophat/ ./bowtieassembly/Trinity.fasta ../../../trim_galore/KS001_S71_L008_R1_001_val_1.fq,../../../trim_galore/KS002_S72_L008_R1_001_val_1.fq,../../../trim_galore/KS003_S73_L008_R1_001_val_1.fq,../../../trim_galore/KS004_S74_L008_R1_001_val_1.fq,../../../trim_galore/PMKS001_S109_L007_R1_001_val_1.fq,../../../trim_galore/PMKS002_S110_L007_R1_001_val_1.fq,../../../trim_galore/PMKS003_S111_L007_R1_001_val_1.fq,../../../trim_galore/PMKS004_S112_L007_R1_001_val_1.fq,../../../trim_galore/PMKS005_S113_L007_R1_001_val_1.fq,../../../trim_galore/PMKS006_S114_L007_R1_001_val_1.fq,../../../trim_galore/PMKS007_S115_L007_R1_001_val_1.fq,../../../trim_galore/PMKS008_S116_L007_R1_001_val_1.fq ../../../trim_galore/KS001_S71_L008_R2_001_val_2.fq,../../../trim_galore/KS002_S72_L008_R2_001_val_2.fq,../../../trim_galore/KS003_S73_L008_R2_001_val_2.fq,../../../trim_galore/KS004_S74_L008_R2_001_val_2.fq,../../../trim_galore/PMKS001_S109_L007_R2_001_val_2.fq,../../../trim_galore/PMKS002_S110_L007_R2_001_val_2.fq,../../../trim_galore/PMKS003_S111_L007_R2_001_val_2.fq,../../../trim_galore/PMKS004_S112_L007_R2_001_val_2.fq,../../../trim_galore/PMKS005_S113_L007_R2_001_val_2.fq,../../../trim_galore/PMKS006_S114_L007_R2_001_val_2.fq,../../../trim_galore/PMKS007_S115_L007_R2_001_val_2.fq,../../../trim_galore/PMKS008_S116_L007_R2_001_val_2.fq
+```
+Here is the summary and it is better than the options I used before (above):
+
+~~~
+Left reads:
+          Input     : 514505845
+           Mapped   : 481605059 (93.6% of input)
+            of these: 382158128 (79.4%) have multiple alignments (2548465 have >20)
+Right reads:
+          Input     : 514505845
+           Mapped   : 466159332 (90.6% of input)
+            of these: 371558239 (79.7%) have multiple alignments (2533369 have >20)
+92.1% overall read mapping rate.
+
+Aligned pairs: 458483172
+     of these: 366670388 (80.0%) have multiple alignments
+                 4173496 ( 0.9%) are discordant alignments
+88.3% concordant pair alignment rate.
+~~~
 
 
